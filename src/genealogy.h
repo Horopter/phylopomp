@@ -239,15 +239,14 @@ public:
       node_t *p = *i;
       assert(!p->holds(black)); // tree should be pruned first
       tout[n] = p->slate;
+      deme[n] = p->deme();
       if (p->is_root()) {
         type[n] = 0;            // root node
-        deme[n] = NA_INTEGER;
       } else if (p->holds(blue)) {
         type[n] = 1;            // sample node
         deme[n] = p->ball(blue)->deme();
       } else {
         type[n] = 2;            // internal node
-        deme[n] = NA_INTEGER;
       }
       lin[n] = p->lineage();    // 0-based indexing
       sat[n] = p->nchildren();

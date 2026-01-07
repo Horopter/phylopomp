@@ -99,7 +99,7 @@ static double event_rates
   // 6: waning
   event_rate += (*rate = omega*R); rate++;
   *logpi = 0; logpi++;
-  // 7: sampling (Q = 0)
+  // sampling (Q = 0)
   *penalty += psi*I;
   assert(R_FINITE(event_rate));
   return event_rate;

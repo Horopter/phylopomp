@@ -12,12 +12,9 @@ plot(x,points=TRUE)
 
 diagram(x)
 
-x |>
-  gendat() -> g
-
-g
-
+x |> gendat() -> g
 stopifnot(identical(g,getInfo(x,gendat=TRUE)$gendat))
+g
 
 g |>
   with({
@@ -36,7 +33,7 @@ freeze(
   seed=540737457,
   runSEIRS(time=40,omega=3,psi=0.3)
 ) |>
-  gendat() -> g
+  gendat(obscure=FALSE) -> g
 
 g |>
   with({
@@ -62,7 +59,7 @@ freeze(
   seed=540737457,
   runTwoSpecies(time=4,psi1=8,psi2=5,Beta12=10)
 ) |>
-  gendat() -> g
+  gendat(obscure=FALSE) -> g
 
 g |>
   with({
@@ -76,6 +73,22 @@ g |>
       }
     }
   })
+
+g |>
+  _[c("nodetype","deme","child","ancestor")] |>
+  bind_cols() |>
+  mutate(name=seq_along(deme)-1) |>
+  filter(nodetype==1) |>
+  count(deme)
+
+freeze(
+  seed=540737457,
+  runStrains(time=2,psi1=2,psi2=2,psi3=3)
+) -> x
+
+x |> gendat(obscure=FALSE) -> g
+stopifnot(identical(g,getInfo(x,obscure=FALSE,gendat=TRUE)$gendat))
+stopifnot(identical(g,getInfo(x,prune=FALSE,obscure=FALSE,gendat=TRUE)$gendat))
 
 g |>
   _[c("nodetype","deme","child","ancestor")] |>
