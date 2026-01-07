@@ -157,12 +157,13 @@ void strains_gill
   assert(parent<=nnode);
 #endif
 
+  ll = 0;
+
   // singular portion of filter equation
   switch (nodetype[parent]) {
   default:                      // non-genealogical event
     break;
   case 0:                       // root
-    ll = 0;
     switch (deme[parent]) {
     case STRAIN1:
       ellI1 += 1; break;
@@ -174,7 +175,6 @@ void strains_gill
       assert(0); break;
     }
   case 1:                       // sample
-    ll = 0;
     switch (deme[parent]) {
     case STRAIN1:
       assert(I1 >= ellI1);
@@ -221,7 +221,6 @@ void strains_gill
     }
     break;
   case 2:                       // branch point s=(1,1)
-    ll = 0;
     assert(S >= 0);
     switch (deme[parent]) {
     case STRAIN1:

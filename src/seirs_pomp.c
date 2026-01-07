@@ -170,12 +170,13 @@ void seirs_gill
   int deme = nodedeme[parent];
   assert(parlin >= 0 && parlin < nsample);
 
+  ll = 0;
+
   // singular portion of filter equation
   switch (nodetype[parent]) {
   default:                      // non-genealogical event
     break;
   case 0:                       // root
-    ll = 0;
     // color lineages by sampling without replacement
     assert(sat[parent]==1);
     int c = child[index[parent]];
@@ -206,7 +207,6 @@ void seirs_gill
     }
     break;
   case 1:                       // sample
-    ll = 0;
     // If parent is not in deme I, likelihood = 0.
     assert(deme==1);
     if (parcol != deme) {
@@ -230,7 +230,6 @@ void seirs_gill
     color[parlin] = R_NaReal;
     break;
   case 2:                       // branch point s=(1,1)
-    ll = 0;
     // If parent is not in deme I, likelihood = 0.
     if (parcol != 1) {
       ll += R_NegInf;
